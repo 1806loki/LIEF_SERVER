@@ -28,9 +28,9 @@ app.use((err, req, res, next) => {
 
 app.use(
   session({
+    reSave: false,
+    saveUninitialized: false,
     secret: "loki",
-    resave: true,
-    saveUninitialized: true,
   })
 );
 
@@ -49,8 +49,8 @@ app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB');
-  app.listen(4000, () => {
-      console.log(`Server running on port 4000`);
+  app.listen(27017, () => {
+      console.log(`Server running on port 27017`);
   });
 });
 

@@ -41,9 +41,9 @@ app.use(function (err, req, res, next) {
   res.status(500).send("Something went wrong!");
 });
 app.use((0, _expressSession["default"])({
-  secret: "loki",
-  resave: true,
-  saveUninitialized: true
+  reSave: false,
+  saveUninitialized: false,
+  secret: "loki"
 }));
 app.use(_passport["default"].initialize());
 app.use(_passport["default"].session());
@@ -58,8 +58,8 @@ app.listen(PORT, function () {
 
 _mongoose["default"].connection.once('open', function () {
   console.log('Connected to MongoDB');
-  app.listen(4000, function () {
-    console.log("Server running on port 4000");
+  app.listen(27017, function () {
+    console.log("Server running on port 27017");
   });
 });
 

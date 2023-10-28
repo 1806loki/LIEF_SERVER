@@ -7,9 +7,11 @@ exports["default"] = void 0;
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
+var _config = require("./config.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var mongoURL = "mongodb://admin:mongo123@ac-e85t195-shard-00-00.rzm9aia.mongodb.net:27017,ac-e85t195-shard-00-01.rzm9aia.mongodb.net:27017,ac-e85t195-shard-00-02.rzm9aia.mongodb.net:27017/?ssl=true&replicaSet=atlas-twp6sm-shard-0&authSource=admin&retryWrites=true&w=majority";
+var mongoURL = _config.MONGODB_URL;
 
 var connectDB = function connectDB() {
   return regeneratorRuntime.async(function connectDB$(_context) {
@@ -18,7 +20,7 @@ var connectDB = function connectDB() {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return regeneratorRuntime.awrap(_mongoose["default"].connect(mongoURL, {
+          return regeneratorRuntime.awrap(_mongoose["default"].connect("mongodb://admin:mongo123@ac-e85t195-shard-00-00.rzm9aia.mongodb.net:27017,ac-e85t195-shard-00-01.rzm9aia.mongodb.net:27017,ac-e85t195-shard-00-02.rzm9aia.mongodb.net:27017/?ssl=true&replicaSet=atlas-twp6sm-shard-0&authSource=admin&retryWrites=true&w=majority", {
             useNewUrlParser: true,
             useUnifiedTopology: true
           }));
