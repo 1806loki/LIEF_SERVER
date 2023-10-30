@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getInjuryReports = exports.createInjuryReports = void 0;
+exports.deleteInjuryReport = exports.getInjuryReports = exports.createInjuryReports = void 0;
 
 var _InjuryReportModel = _interopRequireDefault(require("../models/InjuryReportModel.js"));
 
@@ -86,3 +86,43 @@ var getInjuryReports = function getInjuryReports(req, res) {
 };
 
 exports.getInjuryReports = getInjuryReports;
+
+var deleteInjuryReport = function deleteInjuryReport(req, res) {
+  var deleteItem;
+  return regeneratorRuntime.async(function deleteInjuryReport$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(_InjuryReportModel["default"].findByIdAndDelete(req.params.id));
+
+        case 3:
+          deleteItem = _context3.sent;
+
+          if (!deleteItem) {
+            res.status(404).json("Error Not Found");
+          }
+
+          res.json({
+            message: "Report Deleted Successfully"
+          });
+          _context3.next = 11;
+          break;
+
+        case 8:
+          _context3.prev = 8;
+          _context3.t0 = _context3["catch"](0);
+          res.status(500).json({
+            error: "Internal Server Error"
+          });
+
+        case 11:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[0, 8]]);
+};
+
+exports.deleteInjuryReport = deleteInjuryReport;

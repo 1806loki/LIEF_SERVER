@@ -28,10 +28,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var app = (0, _express["default"])();
 var PORT = 3000;
 (0, _dbConnect["default"])();
-app.use((0, _cors["default"])({
-  origin: "http://localhost:5173",
-  methods: "CREATE,READ,UPDATE,DELETE"
-}));
+var corsOptions = {
+  origin: ["http://localhost:5173", "https://lief-injury-tracker.netlify.app"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+};
+app.use((0, _cors["default"])(corsOptions));
 app.use(_bodyParser["default"].json());
 app.use(_bodyParser["default"].urlencoded({
   extended: true
@@ -41,9 +42,9 @@ app.use(function (err, req, res, next) {
   res.status(500).send("Something went wrong!");
 });
 app.use((0, _expressSession["default"])({
-  reSave: false,
-  saveUninitialized: false,
-  secret: "loki"
+  secret: "your-secret-key",
+  resave: false,
+  saveUninitialized: true
 }));
 app.use(_passport["default"].initialize());
 app.use(_passport["default"].session());
@@ -56,14 +57,14 @@ app.listen(PORT, function () {
   return console.log("Server is running at ".concat(PORT));
 });
 
-_mongoose["default"].connection.once('open', function () {
-  console.log('Connected to MongoDB');
+_mongoose["default"].connection.once("open", function () {
+  console.log("Connected to MongoDB");
   app.listen(27017, function () {
     console.log("Server running on port 27017");
   });
 });
 
-_mongoose["default"].connection.on('error', function (err) {
+_mongoose["default"].connection.on("error", function (err) {
   console.log(err);
 });
 

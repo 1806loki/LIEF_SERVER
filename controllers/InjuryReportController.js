@@ -40,3 +40,17 @@ export const getInjuryReports = async (req, res) => {
     res.status(500).json({ error: `Internal server error: ${err.message}` });
   }
 };
+
+export const deleteInjuryReport = async (req, res) => {
+  try {
+    const deleteItem = await InjuryReportModel.findByIdAndDelete(req.params.id);
+    if (!deleteItem) {
+      res.status(404).json("Error Not Found");
+    }
+    res.json({ message: "Report Deleted Successfully" });
+  } catch (err) {
+    res.status(500).json({
+      error: "Internal Server Error",
+    });
+  }
+};

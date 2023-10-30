@@ -15,5 +15,6 @@ var router = _express["default"].Router();
 
 router.post("/injuryReport", _InjuryReportController.createInjuryReports);
 router.get("/injuryReport", _InjuryReportController.getInjuryReports);
+router["delete"]("/injuryReport/:id", _InjuryReportController.deleteInjuryReport);
 var _default = router;
 exports["default"] = _default;

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js"
   },
   "type": "module",
   "keywords": [],

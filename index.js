@@ -5,19 +5,20 @@ import passport from "passport";
 import session from "express-session";
 import router from "./routes/authRouter.js";
 import injuryReportsRoute from "./routes/dbRouter.js";
-import connectDB from "./config/dbConnect.js"
+import connectDB from "./config/dbConnect.js";
 import mongoose from "mongoose";
 
 const app = express();
 
 const PORT = 3000;
 connectDB();
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: "CREATE,READ,UPDATE,DELETE",
-  })
-);
+const corsOptions = {
+  origin: ["http://localhost:5173", "https://lief-injury-tracker.netlify.app"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -28,9 +29,9 @@ app.use((err, req, res, next) => {
 
 app.use(
   session({
-    reSave: false,
-    saveUninitialized: false,
-    secret: "loki",
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: true,
   })
 );
 
@@ -46,18 +47,15 @@ app.get("/", (req, res) => {
 });
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
 
-
-mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
+mongoose.connection.once("open", () => {
+  console.log("Connected to MongoDB");
   app.listen(27017, () => {
-      console.log(`Server running on port 27017`);
+    console.log(`Server running on port 27017`);
   });
 });
 
-mongoose.connection.on('error', err => {
+mongoose.connection.on("error", (err) => {
   console.log(err);
-})
+});
 
 export default app;
-
-
